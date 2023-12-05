@@ -22,6 +22,9 @@ public class Library {
 	@Column(name = "NAME")
 	private String name;
 	
+	@Column(name = "USER_ID")
+	private Integer userId;
+	
 	// ID (get;set;)
 	public Integer getId() {
 		return this.id;
@@ -37,4 +40,28 @@ public class Library {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	// USER_ID(get;set;)
+	public Integer getUserId() {
+		return this.userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
