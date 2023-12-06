@@ -36,9 +36,10 @@
 										<td th:text="${library.id}"></td>
 										<td th:text="${library.name}"></td>
 										<td>
-											<form th:action="@{/library/borrow/{id}(id=${library.id})}" method="post">
+											<form th:action="@{/library/borrow}" method="get">
 												<!-- class属性にtbl-borrow-btnを追加 -->
-												<input class="tbl-borrow-btn" type="submit" name="in" value="borrow">
+												<input type="submit" value="borrow" class="btn btn-info">
+												<input type="hidden" name="id" th:value="${library.id}">
 											</form>
 										</td>
 									</tr>
