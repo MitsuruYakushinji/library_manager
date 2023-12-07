@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,19 @@ public class LogService {
 	
 	public List<Log> findAll(){
 		return this.logRepository.findAll();
+	}
+	
+	// データ保存用
+	public Log save(Integer id, Integer userId, LocalDateTime rentDate, LocalDateTime preReturnDueDate, LocalDateTime returnDate) {
+		// Entityクラス(Log)のインスタンス生成
+		Log log = new Log();
+		log.setLibraryId(id);
+		log.setUserId(userId);
+		log.setRentDate(rentDate);
+		log.setReturnDueDate(preReturnDueDate);
+		log.setReturnDate(returnDate);
+		
+		// reposotory.saveメソッドを利用してデータの保存を行う
+	    return this.logRepository.save(log);
 	}
 }

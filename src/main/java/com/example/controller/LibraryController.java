@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
+import com.example.entity.Log;
 import com.example.service.LibraryService;
+import com.example.service.LogService;
 import com.example.service.LoginUser;
 
 
@@ -21,10 +24,14 @@ import com.example.service.LoginUser;
 public class LibraryController {
 	
 	private final LibraryService libraryService;
+	private final LogService logService;
+	private Log log;
+	
 	
 	@Autowired
-	public LibraryController(LibraryService libraryService) {
+	public LibraryController(LibraryService libraryService, LogService logService) {
 		this.libraryService = libraryService;
+		this.logService = logService;
 	}
 
 	// 書籍の一覧表示
@@ -47,11 +54,16 @@ public class LibraryController {
 	@PostMapping("borrow")
 	public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal LoginUser loginUser) {
 		Library library = this.libraryService.findById(id);
-		library.setUserId(loginUser.getUser().getId());
+		// 現在ログイン中のユーザーID
+		Integer userId = loginUser.getUser().getId();
+		LocalDateTime rentDate = LocalDateTime.now();
+		LocalDateTime preReturnDueDate = LocalDateTime.parse(returnDueDate + "T00:00:00");
+		LocalDateTime returnDate = null;
+		library.setUserId(userId);
 		
 		// Logsモデルを利用したINSERT処理
+		logService.save(id, userId, rentDate, preReturnDueDate, returnDate);
 		
 		return "redirect:/library";
 	}
-	
 }
