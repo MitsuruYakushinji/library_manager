@@ -84,19 +84,3 @@ public class Log {
 		this.returnDueDate = returnDueDate;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

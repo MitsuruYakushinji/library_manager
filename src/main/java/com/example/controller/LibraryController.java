@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
-import com.example.entity.Log;
 import com.example.service.LibraryService;
 import com.example.service.LogService;
 import com.example.service.LoginUser;
@@ -25,10 +24,9 @@ public class LibraryController {
 	
 	private final LibraryService libraryService;
 	private final LogService logService;
-	private Log log;
-	
-	
+
 	@Autowired
+	// コンストラクタインジェクション
 	public LibraryController(LibraryService libraryService, LogService logService) {
 		this.libraryService = libraryService;
 		this.logService = logService;
