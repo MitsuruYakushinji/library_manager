@@ -51,13 +51,19 @@ public class LibraryController {
 	// 書籍の貸し出し処理
 	@PostMapping("borrow")
 	public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal LoginUser loginUser) {
+		
+		// 書籍IDに該当する書籍情報を1件取得
 		Library library = this.libraryService.findById(id);
+		
 		// 現在ログイン中のユーザーID
 		Integer userId = loginUser.getUser().getId();
+		
+		// 書籍情報のUSER_IDを更新
+		library.setUserId(userId);
+		
 		LocalDateTime rentDate = LocalDateTime.now();
 		LocalDateTime preReturnDueDate = LocalDateTime.parse(returnDueDate + "T00:00:00");
 		LocalDateTime returnDate = null;
-		library.setUserId(userId);
 		
 		// Logsモデルを利用したINSERT処理
 		logService.save(id, userId, rentDate, preReturnDueDate, returnDate);
