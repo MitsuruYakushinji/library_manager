@@ -41,7 +41,7 @@
 													<input type="submit" value="borrow" class="btn btn-info">
 													<input type="hidden" name="id" th:value="${library.id}">
 												</form>
-												<form th:case="self" th:action="@{/library/return}" method="post">
+												<form th:case="${#authentication.principal.user.id}" th:action="@{/library/return}" method="post">
 													<input type="submit" value="return" class="btn btn-danger">
 													<input type="hidden" name="id" th:value="${library.id}">
 												</form>
