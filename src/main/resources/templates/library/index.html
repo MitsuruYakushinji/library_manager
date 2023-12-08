@@ -36,23 +36,19 @@
 										<td th:text="${library.id}"></td>
 										<td th:text="${library.name}"></td>
 										<td>
-											<form th:action="@{/library/borrow}" method="get">
-												<!--<div th:if="${library.userId} == 1">-->
-													<div th:switch="${library.userId}">
-														<button th:case="0" type="submit" class="btn btn-info">borrow</button>
-														<button th:case="1" type="submit" class="btn btn-info">return</button>
-														<div th:case="2" class="btn btn-info">borrowing</div>
-													</div>
-												<!--</div>-->
-												<!--<div th:if="${library.userId} == 2">
-													<div th:switch="${library.userId}">
-														<button th:case="0" type="submit" class="btn btn-info">borrow</button>
-														<button th:case="2" type="submit" class="btn btn-info">return</button>
-														<button th:case="1" type="submit" class="btn btn-info">borrowing</button>
-													</div>
-												</div>-->
-												<input type="hidden" name="id" th:value="${library.id}">
-											</form>
+											<div th:switch="${library.userId}">
+												<form th:case="0" th:action="@{/library/borrow}" method="get">
+													<input type="submit" value="borrow" class="btn btn-info">
+													<input type="hidden" name="id" th:value="${library.id}">
+												</form>
+												<form th:case="self" th:action="@{/library/return}" method="post">
+													<input type="submit" value="return" class="btn btn-danger">
+													<input type="hidden" name="id" th:value="${library.id}">
+												</form>
+												<form th:case="*">
+													<div class="btn btn-success">borrowing</div>
+												</form>
+											</div>
 										</td>
 									</tr>
 								</tbody>
