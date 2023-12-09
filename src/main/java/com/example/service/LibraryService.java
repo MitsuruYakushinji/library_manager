@@ -19,7 +19,7 @@ public class LibraryService {
 		this.libraryRepository = libraryRepository;
 	}
 	
-	// 書籍の情報取得
+	// 書籍情報の全件取得
 	public List<Library> findAll(){
 		return this.libraryRepository.findAll();
 	}

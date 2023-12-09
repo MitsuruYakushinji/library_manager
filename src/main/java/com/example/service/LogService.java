@@ -20,10 +20,12 @@ public class LogService {
 		this.logRepository = logRepository;
 	}
 
+	// ログ情報の全件取得
 	public List<Log> findAll() {
 		return this.logRepository.findAll();
 	}
 
+	// ログから書籍IDとユーザーIDに該当する最新情報取得
 	public Optional<Log> findByLibraryIdAndUserId(Integer libraryId, Integer userId) {
 		return this.logRepository.findByLibraryIdAndUserId(libraryId, userId);
 	}
