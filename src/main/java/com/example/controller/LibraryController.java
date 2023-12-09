@@ -61,12 +61,35 @@ public class LibraryController {
 		// 書籍情報のUSER_IDを更新
 		library.setUserId(userId);
 		
+		// 貸し出し日は最新の日付
 		LocalDateTime rentDate = LocalDateTime.now();
+		
+		// 引数用の変数に加工した返却予定日を用意
 		LocalDateTime preReturnDueDate = LocalDateTime.parse(returnDueDate + "T00:00:00");
+		
 		LocalDateTime returnDate = null;
 		
 		// Logsモデルを利用したINSERT処理
 		logService.save(id, userId, rentDate, preReturnDueDate, returnDate);
+		
+		return "redirect:/library";
+	}
+	
+	// 書籍の返却処理
+	@PostMapping("return")
+	public String returnBook(@RequestParam("id") Integer id, @AuthenticationPrincipal LoginUser loginUser) {
+		
+		// 書籍IDに該当する書籍情報を1件取得
+		Library library = this.libraryService.findById(id);
+		
+		// 現在ログイン中のユーザーID
+		Integer userId = loginUser.getUser().getId();
+		
+		// 取得した書籍情報のUSER_IDを更新(0で上書き)
+		library.setUserId(0);
+		
+		// Logsモデルを利用したUPDATE処理
+		logService.update(id, userId);
 		
 		return "redirect:/library";
 	}
